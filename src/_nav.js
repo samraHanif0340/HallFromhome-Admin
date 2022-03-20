@@ -11,6 +11,9 @@ import {
   cilPuzzle,
   cilSpeedometer,
   cilStar,
+  cilUser,
+  cilHome,
+  cilUserPlus,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
@@ -20,14 +23,32 @@ const _nav = [
     name: 'Dashboard',
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-      text: 'NEW',
-    },
+    // badge: {
+    //   color: 'info',
+    //   text: 'NEW',
+    // },
+  },
+  {
+    component: CNavItem,
+    name: 'Venues',
+    to: '/venues',
+    icon: <CIcon icon={cilHome} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Users',
+    to: '/charts',
+    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Customers',
+    to: '/charts',
+    icon: <CIcon icon={cilUserPlus} customClassName="nav-icon" />,
   },
   {
     component: CNavTitle,
-    name: 'Theme',
+    name: 'Admin',
   },
   {
     component: CNavItem,
@@ -192,12 +213,6 @@ const _nav = [
         to: '/forms/validation',
       },
     ],
-  },
-  {
-    component: CNavItem,
-    name: 'Charts',
-    to: '/charts',
-    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
   },
   {
     component: CNavGroup,
