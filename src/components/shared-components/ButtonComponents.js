@@ -15,6 +15,33 @@ const VenueButtons = () => {
     );
 };
 
+const VenueOwnerButtons = () => {
+    const favoriteImage = () =>{
+        alert('Selected Image has been favorited')
+    }  
+    return (
+        <>
+        {/* <span className="mx-3" title="Approve Venue" onClick={favoriteImage}><FontAwesomeIcon icon={faEye}/></span> */}
+            <span className="mx-3" title="Reject Venue" onClick={favoriteImage}><FontAwesomeIcon icon={faCircleCheck}/></span>
+            <span className="mx-3" title="View Venue Details" onClick={favoriteImage}><FontAwesomeIcon icon={faBan}/></span>
+        </>
+    );
+};
+
+const CustomerButtons = () => {
+    const favoriteImage = () =>{
+        alert('Selected Image has been favorited')
+    }  
+    return (
+        <>
+        {/* <span className="mx-3" title="Approve Venue" onClick={favoriteImage}><FontAwesomeIcon icon={faEye}/></span> */}
+            <span className="mx-3" title="Reject Venue" onClick={favoriteImage}><FontAwesomeIcon icon={faCircleCheck}/></span>
+            <span className="mx-3" title="View Venue Details" onClick={favoriteImage}><FontAwesomeIcon icon={faBan}/></span>
+        </>
+    );
+};
+
+
 // const RejectButton = (props) => {
 //     const DownloadImage = () =>{
 //         let imageLink = props.value
@@ -26,4 +53,4 @@ const VenueButtons = () => {
 //     );
 // };
 
-export {VenueButtons}
+export {VenueButtons,VenueOwnerButtons,CustomerButtons}
