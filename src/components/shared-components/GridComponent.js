@@ -27,7 +27,6 @@ console.log(props)
         <>
       
         <div className="container">
-        <h1>Image List</h1>
         <div className="col-lg-4">
         <input 
         className=" form-control my-3"

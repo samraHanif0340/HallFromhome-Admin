@@ -52,11 +52,19 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
 //Admin
 const Venues = React.lazy(() => import('./views/venues/venues'))
+const VenueOwners = React.lazy(() => import('./views/venueOwners/venueOwners'))
+const Customers = React.lazy(() => import('./views/customers/customers'))
+
+
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/venues', name: 'Venues', element: Venues },
+  { path: '/owners', name: 'Venue Owners', element: VenueOwners },
+  { path: '/customers', name: 'Customers', element: Customers },
+
+
 
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },

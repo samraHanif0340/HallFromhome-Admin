@@ -8,9 +8,9 @@ const VenueButtons = () => {
     }  
     return (
         <>
-        <span className="mx-3" title="Approve Venue" onClick={favoriteImage}><FontAwesomeIcon icon={faEye}/></span>
-            <span className="mx-3" title="Reject Venue" onClick={favoriteImage}><FontAwesomeIcon icon={faCircleCheck}/></span>
-            <span className="mx-3" title="View Venue Details" onClick={favoriteImage}><FontAwesomeIcon icon={faBan}/></span>
+        <span className="mx-3" title="View Venue Details" onClick={favoriteImage}><FontAwesomeIcon icon={faEye}/></span>
+            <span className="mx-3" title="Approve Venue" onClick={favoriteImage}><FontAwesomeIcon icon={faCircleCheck}/></span>
+            <span className="mx-3" title="Reject Venue" onClick={favoriteImage}><FontAwesomeIcon icon={faBan}/></span>
         </>
     );
 };
@@ -22,8 +22,8 @@ const VenueOwnerButtons = () => {
     return (
         <>
         {/* <span className="mx-3" title="Approve Venue" onClick={favoriteImage}><FontAwesomeIcon icon={faEye}/></span> */}
-            <span className="mx-3" title="Reject Venue" onClick={favoriteImage}><FontAwesomeIcon icon={faCircleCheck}/></span>
-            <span className="mx-3" title="View Venue Details" onClick={favoriteImage}><FontAwesomeIcon icon={faBan}/></span>
+            <span className="mx-3" title="Active Selected Owner" onClick={favoriteImage}><FontAwesomeIcon icon={faCircleCheck}/></span>
+            <span className="mx-3" title="Block Selected Owner" onClick={favoriteImage}><FontAwesomeIcon icon={faBan}/></span>
         </>
     );
 };
@@ -34,12 +34,12 @@ const CustomerButtons = () => {
     }  
     return (
         <>
-        {/* <span className="mx-3" title="Approve Venue" onClick={favoriteImage}><FontAwesomeIcon icon={faEye}/></span> */}
-            <span className="mx-3" title="Reject Venue" onClick={favoriteImage}><FontAwesomeIcon icon={faCircleCheck}/></span>
-            <span className="mx-3" title="View Venue Details" onClick={favoriteImage}><FontAwesomeIcon icon={faBan}/></span>
+         <span className="mx-3" title="Active Selected Customer" onClick={favoriteImage}><FontAwesomeIcon icon={faCircleCheck}/></span>
+            <span className="mx-3" title="Block Selected Customer" onClick={favoriteImage}><FontAwesomeIcon icon={faBan}/></span>
         </>
     );
 };
+
 
 
 // const RejectButton = (props) => {

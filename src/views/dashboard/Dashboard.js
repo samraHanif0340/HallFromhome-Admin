@@ -8,6 +8,7 @@ import {
   CCardBody,
   CCardFooter,
   CCardHeader,
+  CCardGroup,
   CCol,
   CProgress,
   CRow,
@@ -17,7 +18,10 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CWidgetStatsC
 } from '@coreui/react'
+
+import { DocsExample } from 'src/components'
 import { CChartLine } from '@coreui/react-chartjs'
 import { getStyle, hexToRgba } from '@coreui/utils'
 import CIcon from '@coreui/icons-react'
@@ -42,6 +46,8 @@ import {
   cilPeople,
   cilUser,
   cilUserFemale,
+  cilUserFollow,
+  cilHome
 } from '@coreui/icons'
 
 import avatar1 from 'src/assets/images/avatars/1.jpg'
@@ -180,8 +186,34 @@ const Dashboard = () => {
 
   return (
     <>
-      <WidgetsDropdown />
-      <CCard className="mb-4">
+      {/* <WidgetsDropdown /> */}
+      {/* <DocsExample href="/components/widgets/#cwidgetstatsc"> */}
+          <CCardGroup className="mb-4">
+            <CWidgetStatsC
+              icon={<CIcon icon={cilPeople} height={36} />}
+              value="87"
+              title="Customers"
+              progress={{ color:'green', value: 87 }}
+              color="warning"
+
+            />
+            <CWidgetStatsC
+              icon={<CIcon icon={cilUserFollow} height={36} />}
+              value="385"
+              title="Venue Owners"
+              progress={{ color:'green', value: 385 }}
+              color="info"
+            />
+            <CWidgetStatsC
+              icon={<CIcon icon={cilHome} height={36} />}
+              value="1238"
+              title="Venues"
+              progress={{ color:'green', value: 1238 }}
+              color="success"
+            />
+          </CCardGroup>
+        {/* </DocsExample> */}
+      {/* <CCard className="mb-4">
         <CCardBody>
           <CRow>
             <CCol sm={5}>
@@ -453,7 +485,7 @@ const Dashboard = () => {
             </CCardBody>
           </CCard>
         </CCol>
-      </CRow>
+      </CRow> */}
     </>
   )
 }
