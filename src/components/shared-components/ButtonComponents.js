@@ -4,7 +4,8 @@ import { faEye,faCircleCheck ,faBan} from '@fortawesome/free-solid-svg-icons'
 
 
 const VenueButtons = (props) => {      
-    const viewVenueDetails = (props) =>{
+    const viewVenueDetails = () =>{
+        props.context.methodForViewVenues(props.data,true);
     }  
 
     const approveVenue = () =>{

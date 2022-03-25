@@ -20,12 +20,19 @@ const Venues = () => {
     let [row,setRow] = React.useState(null)
     let [showApproveModal,setShowApproveModal] = useState(false)
     let [showRejectModal,setShowRejectModal] = useState(false)
+    let [showViewModal,setShowViewModal] = useState(false)
+
     const [isLoading, setIsLoading] = React.useState(false);
 
-    React.useEffect(() => {
-     
+    React.useEffect(() => {    
         getVenueList();
       }, []);
+
+      const performViewVenueMethod = (childData,showModal) => {
+        console.log('IN view venuw')
+        // setRow(childData)
+        // setShowViewModal(showModal) 
+      }
 
       const performApprovedMethod = (childData,showModal) => {
         setRow(childData)
@@ -56,7 +63,6 @@ const Venues = () => {
       }
       approveRejectService(payload)
       }
- 
  
       const [columns] = React.useState([
         { field: "VenueName" ,headerName: "Venue Name",},
@@ -162,7 +168,12 @@ const Venues = () => {
 
         <Container>
           <h3>Venues</h3>
-        {React.useMemo(()=><GridComponent approveVenuesEmitter={performApprovedMethod} rejectVenuesEmitter={performRejectMethod} columnDefs={columns} gridData={data}/>,[columns,data])}
+        {React.useMemo(()=>
+        <GridComponent 
+        approveVenuesEmitter={performApprovedMethod} 
+        rejectVenuesEmitter={performRejectMethod} 
+        viewVenuesEmitter={performViewVenueMethod} 
+        columnDefs={columns} gridData={data}/>,[columns,data])}
         </Container>
            
         </>

@@ -22,8 +22,10 @@ console.log(props)
       props.approveVenuesEmitter(row,showApproveModal)  
     }
     const methodForRejectVenues = (row,showRejectModal) =>{
-      console.log("IN GRID yooloo ",row,showRejectModal)
       props.rejectVenuesEmitter(row,showRejectModal)  
+    }
+    const methodForViewVenues = (row,showViewModal) =>{
+      props.viewVenuesEmitter(row,showViewModal)  
     }
 
     const onFilterTextBoxChanged = React.useCallback(() => {
@@ -35,7 +37,8 @@ console.log(props)
 
       const context = {
         methodForApproveVenues: (row,showApproveModal) => methodForApproveVenues(row,showApproveModal),
-        methodForRejectVenues: (row,showRejectModal) => methodForRejectVenues(row,showRejectModal),       
+        methodForRejectVenues: (row,showRejectModal) => methodForRejectVenues(row,showRejectModal), 
+        methodForViewVenues: (row,showViewModal) => methodForViewVenues(row,showViewModal),       
       }
     return (
         <>
