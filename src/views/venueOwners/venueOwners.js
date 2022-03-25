@@ -27,6 +27,8 @@ const VenueOwners = () => {
         { field: "CNIC",headerName: "CNIC",},
         { field: "CityDesc",headerName: "City",},
         { field: "IsActive",headerName: "Active",},
+        { field: "VenueList",headerName: "Venues",},
+        { field: "VenueCount",headerName: "Total Venues",pinned:'right'},
         { field: "action", headerName:'Actions',cellRenderer: VenueOwnerButtons ,pinned:'right'}
     ]);  
 
