@@ -47,7 +47,11 @@ import {
   cilUser,
   cilUserFemale,
   cilUserFollow,
-  cilHome
+  cilHome,
+  cilActionRedo,
+  cilCheckCircle,
+  cilBan,
+  cilBook
 } from '@coreui/icons'
 
 import avatar1 from 'src/assets/images/avatars/1.jpg'
@@ -186,33 +190,64 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* <WidgetsDropdown /> */}
-      {/* <DocsExample href="/components/widgets/#cwidgetstatsc"> */}
-          <CCardGroup className="mb-4">
+    <CCard className="my-3">
+      <CCardHeader>Statistics</CCardHeader>
+            <CCardGroup className="mx-3 my-3">
             <CWidgetStatsC
+            className="mx-3"
               icon={<CIcon icon={cilPeople} height={36} />}
-              value="87"
+              value="1350"
               title="Customers"
-              progress={{ color:'green', value: 87 }}
-              color="warning"
-
+              progress={{ color: 'info', value: 75 }}
             />
             <CWidgetStatsC
+             className="mx-3"
               icon={<CIcon icon={cilUserFollow} height={36} />}
-              value="385"
+              value="778"
               title="Venue Owners"
-              progress={{ color:'green', value: 385 }}
-              color="info"
+              progress={{ color: 'success', value: 75 }}
             />
             <CWidgetStatsC
+             className="mx-3"
               icon={<CIcon icon={cilHome} height={36} />}
-              value="1238"
+              value="765"
               title="Venues"
-              progress={{ color:'green', value: 1238 }}
-              color="success"
+              progress={{ color: 'warning', value: 75 }}
             />
-          </CCardGroup>
-        {/* </DocsExample> */}
+           </CCardGroup>
+        
+    </CCard>
+
+    <CCard>
+  <CCardHeader>Venues</CCardHeader>
+      <CCardGroup className="mx-3 my-3">
+            <CWidgetStatsC
+            className="mx-3"
+              icon={<CIcon icon={cilBook} height={36} />}
+              value="200"
+              title="Pending"
+              color='info'
+              // progress={{ color: 'info', value: 75 }}
+            />
+            <CWidgetStatsC
+             className="mx-3"
+              icon={<CIcon icon={cilCheckCircle} height={36} />}
+              value="500"
+              color='success'
+              title="Approved"
+              // progress={{ color: 'success', value: 75 }}
+            />
+            <CWidgetStatsC
+             className="mx-3"
+              icon={<CIcon icon={cilBan} height={36} />}
+              value="65"
+              color='danger'
+              title="Rejected"
+              // progress={{ color: 'warning', value: 75 }}
+            />
+           </CCardGroup>
+    </CCard>    
+       
       {/* <CCard className="mb-4">
         <CCardBody>
           <CRow>
