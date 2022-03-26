@@ -52,15 +52,4 @@ const CustomerButtons = () => {
 
 
 
-// const RejectButton = (props) => {
-//     const DownloadImage = () =>{
-//         let imageLink = props.value
-//         window.open(imageLink,'_blank')
-//     }
-    
-//     return (      
-//          <><button>Reject</button></>     
-//     );
-// };
-
 export {VenueButtons,VenueOwnerButtons,CustomerButtons}
