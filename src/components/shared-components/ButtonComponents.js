@@ -20,7 +20,7 @@ const VenueButtons = (props) => {
         <>   
         <span className="mx-3" title="View Venue Details" onClick={viewVenueDetails}><FontAwesomeIcon icon={faEye}/></span>
           {props.data.VenueStatus == 'Approved' ? null : <span className="mx-3"  title="Approve Venue" onClick={approveVenue}><FontAwesomeIcon icon={faCircleCheck}/></span>}  
-          {props.data.VenueStatus == 'Rejected' ? null :  <span className="mx-3" title="Reject Venue" onClick={rejectVenue}><FontAwesomeIcon icon={faBan}/></span>}
+          {props.data.VenueStatus == 'Rejected' || props.data.VenueStatus == 'Approved' ? null :  <span className="mx-3" title="Reject Venue" onClick={rejectVenue}><FontAwesomeIcon icon={faBan}/></span>}
         </>
     );
 };

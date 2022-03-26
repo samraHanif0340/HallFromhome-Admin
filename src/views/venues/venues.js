@@ -189,7 +189,7 @@ const Venues = () => {
           <CModalTitle>Confirmation</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          Are you sure you want to Approve the selected Venue? By Clicking Yes, {row && row.venueName ? row.VenueName.toUpperCase() : 'the selected venue'} will be enabled in public listing.
+          Are you sure you want to Approve the selected Venue? By Clicking Yes, {row && row.VenueName ? row.VenueName.toUpperCase() : 'the selected venue'} will be enabled in public listing.
         </CModalBody>
         <CModalFooter>
           <CButton color="secondary" onClick={() => setShowApproveModal(false)}>
