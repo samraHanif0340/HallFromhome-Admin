@@ -10,14 +10,16 @@ console.log(props)
         return {
           editable: true,
           sortable: true,
-          flex: 1,
-          filter: true,
+          // flex: 1,
+          floatingFilter: true,
           resizable: true,
+          filter:true,
+          width: 150,
         };
       }, []);
- 
-    // const [columnDefs] = React.useState(props.columns);  
 
+      
+    // VENUE EVENTS
     const methodForApproveVenues = (row,showApproveModal) =>{
       props.approveVenuesEmitter(row,showApproveModal)  
     }
@@ -26,6 +28,28 @@ console.log(props)
     }
     const methodForViewVenues = (row,showViewModal) =>{
       props.viewVenuesEmitter(row,showViewModal)  
+    }
+    const methodForDisableVenues = (row,showViewModal) =>{
+      props.disableVenuesEmitter(row,showViewModal)  
+    }
+    const methodForEnableVenues = (row,showViewModal) =>{
+      props.enableVenuesEmitter(row,showViewModal)  
+    }
+
+    // CUSTOMER EVENTS
+    const methodForActiveCustomer = (row,showViewModal) =>{
+      props.activeVenueCustomers(row,showViewModal)  
+    }
+    const methodForBlockCustomer = (row,showViewModal) =>{
+      props.blockVenueCustomers(row,showViewModal)  
+    }
+
+     // VENUE OWNER EVENTS
+     const methodForActiveVenueOwner = (row,showViewModal) =>{
+      props.activeVenueOwners(row,showViewModal)  
+    }
+    const methodForBlockVenueOwner = (row,showViewModal) =>{
+      props.blockVenueOwners(row,showViewModal)  
     }
 
     const onFilterTextBoxChanged = React.useCallback(() => {
@@ -38,7 +62,16 @@ console.log(props)
       const context = {
         methodForApproveVenues: (row,showApproveModal) => methodForApproveVenues(row,showApproveModal),
         methodForRejectVenues: (row,showRejectModal) => methodForRejectVenues(row,showRejectModal), 
-        methodForViewVenues: (row,showViewModal) => methodForViewVenues(row,showViewModal),       
+        methodForViewVenues: (row,showViewModal) => methodForViewVenues(row,showViewModal),  
+        methodForDisableVenues: (row,showViewModal) => methodForDisableVenues(row,showViewModal),  
+        methodForEnableVenues: (row,showViewModal) => methodForEnableVenues(row,showViewModal),  
+
+
+        methodForBlockCustomer: (row,showViewModal) => methodForBlockCustomer(row,showViewModal),       
+        methodForActiveCustomer: (row,showViewModal) => methodForActiveCustomer(row,showViewModal),
+
+        methodForActiveVenueOwner: (row,showViewModal) => methodForActiveVenueOwner(row,showViewModal),       
+        methodForBlockVenueOwner: (row,showViewModal) => methodForBlockVenueOwner(row,showViewModal),       
       }
     return (
         <>
@@ -62,6 +95,7 @@ console.log(props)
                columnDefs={props.columnDefs}
                pagination={true}
                defaultColDef={defaultColDef}
+               rowHeight={50}
                overlayLoadingTemplate={
                 '<span class="ag-overlay-loading-center">Loading</span>'
               }

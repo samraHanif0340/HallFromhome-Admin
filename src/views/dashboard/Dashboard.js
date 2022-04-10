@@ -198,21 +198,21 @@ const Dashboard = () => {
               icon={<CIcon icon={cilPeople} height={36} />}
               value="1350"
               title="Customers"
-              progress={{ color: 'info', value: 75 }}
+              progress={{ color: 'info', value: 100 }}
             />
             <CWidgetStatsC
              className="mx-3"
               icon={<CIcon icon={cilUserFollow} height={36} />}
               value="778"
               title="Venue Owners"
-              progress={{ color: 'success', value: 75 }}
+              progress={{ color: 'success', value: 100 }}
             />
             <CWidgetStatsC
              className="mx-3"
               icon={<CIcon icon={cilHome} height={36} />}
               value="765"
               title="Venues"
-              progress={{ color: 'warning', value: 75 }}
+              progress={{ color: 'warning', value: 100 }}
             />
            </CCardGroup>
         

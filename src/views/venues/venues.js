@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 // import TableContainer from 'src/components/shared-components/TableContainer';
-import { BASE_URL } from 'src/utilities/constants';
+import { BASE_URL,ERROR_MESSAGES } from 'src/utilities/constants';
 import { Container } from "reactstrap"
 import GridComponent from 'src/components/shared-components/GridComponent';
 import { VenueButtons } from 'src/components/shared-components/ButtonComponents';
+import {Toaster} from '../../utilities/helper'
 import {
   CButton,
   CModal,
@@ -13,7 +14,8 @@ import {
   CModalTitle,
   CCard,
   CCardBody,
-  CCardHeader
+  CCardHeader,
+  CSpinner
 } from '@coreui/react'
 
 import axios from 'axios';
@@ -27,12 +29,27 @@ const Venues = () => {
   let [showApproveModal, setShowApproveModal] = useState(false)
   let [showRejectModal, setShowRejectModal] = useState(false)
   let [showViewModal, setShowViewModal] = useState(false)
+  let [showDisableModal, setShowDisableModal] = useState(false)
+  let [showEnableModal, setShowEnableModal] = useState(false)
+  let [isLoading, setIsLoading] = React.useState(false);
+  let [showToaster, setshowToaster] = React.useState({toasterData:{}});
 
-  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     getVenueList();
   }, []);
+
+  const [columns] = React.useState([
+    { field: "VenueName", headerName: "Venue Name"},
+    { field: "VenueTypeDesc", headerName: "Venue Type", },
+    { field: "CityDesc", headerName: "City", },
+    { field: "RentPrice", headerName: "Price Per Event", },
+    { field: "MaxCapacity", headerName: "Max Persons Allowed", },
+    { field: "IsActive", headerName: "Active", },
+    { field: "VenueStatus", headerName: "Venue Status", pinned: 'right' },
+    { field: "action", headerName: 'Actions', width:180, cellRenderer: VenueButtons, pinned: 'right' }
+  ]);
+
 
   const performViewVenueMethod = (childData, showModal) => {
     setRow(childData)
@@ -49,6 +66,16 @@ const Venues = () => {
   const performRejectMethod = (childData, showModal) => {
     setRow(childData)
     setShowRejectModal(showModal)
+  }
+
+  const performDisableVenueMethod = (childData, showModal) => {
+    setRow(childData)
+    setShowDisableModal(showModal)
+  }
+
+  const performEnableVenueMethod = (childData, showModal) => {
+    setRow(childData)
+    setShowEnableModal(showModal)
   }
 
   const goForApproval = () => {
@@ -71,17 +98,25 @@ const Venues = () => {
     approveRejectService(payload)
   }
 
-  const [columns] = React.useState([
-    { field: "VenueName", headerName: "Venue Name", },
-    { field: "VenueTypeDesc", headerName: "Venue Type", },
-    { field: "CityDesc", headerName: "City", },
-    { field: "RentPrice", headerName: "Price Per Event", },
-    { field: "MaxCapacity", headerName: "Max Persons Allowed", },
-    { field: "IsActive", headerName: "Active", },
-    { field: "VenueStatus", headerName: "Venue Status", pinned: 'right' },
-    { field: "action", headerName: 'Actions', cellRenderer: VenueButtons, pinned: 'right' }
-  ]);
+  const goForDisable = () => {
+    let payload = {
+      VenueID: row.VenueID,
+      ActiveStatus: false,
+      AdminID: 1
+    }
+    activeDeactiveService(payload)
+  }
 
+  const goForEnable = () => {
+    let payload = {
+      VenueID: row.VenueID,
+      ActiveStatus: true,
+      AdminID: 1
+    }
+    activeDeactiveService(payload)
+  }
+
+  //SERVICES
   const approveRejectService = async (data) => {
     let formData = Object.assign({}, data)
     let configurationObject = {
@@ -100,6 +135,7 @@ const Venues = () => {
         setIsLoading(false);
         setShowApproveModal(false)
         setShowRejectModal(false)
+        setshowToaster({toasterData:{toaster:true,color:'success',message:response.data.ResponseDesc}})
         getVenueList()
 
         // Snackbar.show({
@@ -112,6 +148,8 @@ const Venues = () => {
         setIsLoading(false);
         setShowApproveModal(false)
         setShowRejectModal(false)
+        setshowToaster({toasterData:{toaster:true,color:'danger',message:response.data.ResponseDesc}})
+
         // Snackbar.show({
         //   text: response.data.ResponseDesc,
         //   duration: Snackbar.LENGTH_LONG,
@@ -126,6 +164,45 @@ const Venues = () => {
       setIsLoading(false);
       setShowApproveModal(false)
       setShowRejectModal(false)
+      setshowToaster({toasterData:{toaster:true,color:'danger',message:ERROR_MESSAGES.CATCH_ERROR}})
+
+    }
+  };
+
+  const activeDeactiveService = async (data) => {
+    let formData = Object.assign({}, data)
+    let configurationObject = {
+      url: `${BASE_URL}ActivateVenue`,
+      method: "POST",
+      cancelToken: source.token,
+      data: { ...formData }
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await axios(
+        configurationObject,
+      );
+      if (response.data.ResponseCode === "00") {
+        setIsLoading(false);
+        setShowDisableModal(false)
+        setShowEnableModal(false)
+        setshowToaster({toasterData:{toaster:true,color:'success',message:response.data.ResponseDesc}})
+        getVenueList()
+        return;
+      } else {
+        setIsLoading(false);
+        setShowDisableModal(false)
+        setShowEnableModal(false)
+        setshowToaster({toasterData:{toaster:true,color:'danger',message:response.data.ResponseDesc}})
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setShowDisableModal(false)
+      setShowEnableModal(false)
+      setshowToaster({toasterData:{toaster:true,color:'danger',message:ERROR_MESSAGES.CATCH_ERROR}})
+
+
     }
   };
 
@@ -173,8 +250,9 @@ const Venues = () => {
   };
 
   const getVenueList = async () => {
+    setIsLoading(true)
     const response = await fetch(BASE_URL + 'GetVenueList');
-    // const response = await fetch("https://randomuser.me/api/?results=100")
+    setIsLoading(false)
     const body = await response.json();
     const venuesList = body.Result_DTO;
     console.log(venuesList);
@@ -183,6 +261,8 @@ const Venues = () => {
 
   return (
     <>
+    { isLoading ? <CSpinner size="lg" color="primary"/> : null}
+    {showToaster && showToaster.toasterData && showToaster.toasterData.toaster ? <Toaster isLoading={showToaster.toasterData.toaster} color={showToaster.toasterData.color} message={showToaster.toasterData.message}/> : null}
       {/* APPROVE VENUE MODAL */}
       <CModal alignment="center" visible={showApproveModal} onClose={() => setShowApproveModal(false)}>
         <CModalHeader>
@@ -195,7 +275,7 @@ const Venues = () => {
           <CButton color="secondary" onClick={() => setShowApproveModal(false)}>
             No
           </CButton>
-          <CButton color="success" onClick={goForApproval}>Yes</CButton>
+          <CButton color="primary" onClick={goForApproval}>Yes</CButton>
         </CModalFooter>
       </CModal>
 
@@ -211,12 +291,43 @@ const Venues = () => {
           <CButton color="secondary" onClick={() => setShowRejectModal(false)}>
             No
           </CButton>
-          <CButton color="success" onClick={goForRejection}>Yes</CButton>
+          <CButton color="primary" onClick={goForRejection}>Yes</CButton>
+        </CModalFooter>
+      </CModal>
+
+       {/* DISABLE VENUE MODAL */}
+       <CModal alignment="center" visible={showDisableModal} onClose={() => setShowDisableModal(false)}>
+        <CModalHeader>
+          <CModalTitle>Confirmation</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          Are you sure you want to Disable the selected Venue? By Clicking Yes, {row && row.VenueName ? row.VenueName.toUpperCase() : 'the selected venue'} will be disabled from the Application.
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={() => setShowDisableModal(false)}>
+            No
+          </CButton>
+          <CButton color="primary" onClick={goForDisable}>Yes</CButton>
+        </CModalFooter>
+      </CModal>
+
+       {/* ENABLE VENUE MODAL */}
+       <CModal alignment="center" visible={showEnableModal} onClose={() => setShowEnableModal(false)}>
+        <CModalHeader>
+          <CModalTitle>Confirmation</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          Are you sure you want to Enable the selected Venue? By Clicking Yes, {row && row.VenueName ? row.VenueName.toUpperCase() : 'the selected venue'} will be enabled for the Application.
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={() => setShowEnableModal(false)}>
+            No
+          </CButton>
+          <CButton color="primary" onClick={goForEnable}>Yes</CButton>
         </CModalFooter>
       </CModal>
 
       {/* VIEW VENUE MODAL */}
-
       <CModal size="xl" alignment="center" scrollable visible={showViewModal} onClose={() => setShowViewModal(false)}>
         <CModalHeader>
           <CModalTitle>Venue Details</CModalTitle>
@@ -295,12 +406,13 @@ const Venues = () => {
 
         </CModalBody> : null}
         <CModalFooter>
-          <CButton color="secondary" onClick={() => showViewModal(false)}>
+          <CButton color="secondary" onClick={() => setShowViewModal(false)}>
             Close
           </CButton>
         </CModalFooter>
       </CModal>
 
+   
       {/* VENUE GRID */}
       <Container>
         <h3>Venues</h3>
@@ -309,6 +421,8 @@ const Venues = () => {
             approveVenuesEmitter={performApprovedMethod}
             rejectVenuesEmitter={performRejectMethod}
             viewVenuesEmitter={performViewVenueMethod}
+            disableVenuesEmitter={performDisableVenueMethod}
+            enableVenuesEmitter={performEnableVenueMethod}
             columnDefs={columns} gridData={data} />, [columns, data])}
       </Container>
     </>
