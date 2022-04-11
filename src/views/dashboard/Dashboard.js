@@ -53,6 +53,8 @@ import {
   cilBan,
   cilBook
 } from '@coreui/icons'
+import { BASE_URL } from 'src/utilities/constants';
+
 
 import avatar1 from 'src/assets/images/avatars/1.jpg'
 import avatar2 from 'src/assets/images/avatars/2.jpg'
@@ -65,6 +67,13 @@ import WidgetsBrand from '../widgets/WidgetsBrand'
 import WidgetsDropdown from '../widgets/WidgetsDropdown'
 
 const Dashboard = () => {
+  const [data, setData] = React.useState([]);
+  let [statsData, setStatsData] = React.useState([]);
+
+  let [isLoading, setIsLoading] = React.useState(false);
+
+
+
   const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
 
   const progressExample = [
@@ -188,12 +197,29 @@ const Dashboard = () => {
     },
   ]
 
+  React.useEffect(() => {
+    getDashboardStats();
+  }, []);
+
+  const getDashboardStats = async () => {
+    setIsLoading(true)
+    const response = await fetch(BASE_URL + 'GetAdminDashboardStatistics');
+    setIsLoading(false)
+    const body = await response.json();
+    let dashboardList = body.Result_DTO;
+    let tempStatsData = dashboardList.splice(0,3)
+    setStatsData(tempStatsData)
+    console.log(dashboardList);
+    console.log(tempStatsData);
+    setData(dashboardList);
+  };
+
   return (
     <>
     <CCard className="my-3">
       <CCardHeader>Statistics</CCardHeader>
             <CCardGroup className="mx-3 my-3">
-            <CWidgetStatsC
+            {/* <CWidgetStatsC
             className="mx-3"
               icon={<CIcon icon={cilPeople} height={36} />}
               value="1350"
@@ -213,7 +239,17 @@ const Dashboard = () => {
               value="765"
               title="Venues"
               progress={{ color: 'warning', value: 100 }}
-            />
+            /> */}
+            {statsData.map((statsRow) => 
+               <CWidgetStatsC
+               key={statsRow.title}
+               className="mx-3"
+                icon={<CIcon icon={cilHome} height={36} />}
+                value={statsRow.value}
+                title={statsRow.title}
+                progress={{ color: statsRow.color, value: 100 }}
+              />
+            )}
            </CCardGroup>
         
     </CCard>
@@ -221,13 +257,22 @@ const Dashboard = () => {
     <CCard>
   <CCardHeader>Venues</CCardHeader>
       <CCardGroup className="mx-3 my-3">
-            <CWidgetStatsC
+      {data.map((statsRow) => 
+               <CWidgetStatsC
+               key={statsRow.title}
+               className="mx-3"
+                icon={<CIcon icon={cilHome} height={36} />}
+                value={statsRow.value}
+                title={statsRow.title}
+                color={statsRow.color}
+              />
+            )}
+            {/* <CWidgetStatsC
             className="mx-3"
               icon={<CIcon icon={cilBook} height={36} />}
               value="200"
               title="Pending"
               color='info'
-              // progress={{ color: 'info', value: 75 }}
             />
             <CWidgetStatsC
              className="mx-3"
@@ -235,7 +280,6 @@ const Dashboard = () => {
               value="500"
               color='success'
               title="Approved"
-              // progress={{ color: 'success', value: 75 }}
             />
             <CWidgetStatsC
              className="mx-3"
@@ -243,8 +287,7 @@ const Dashboard = () => {
               value="65"
               color='danger'
               title="Rejected"
-              // progress={{ color: 'warning', value: 75 }}
-            />
+            /> */}
            </CCardGroup>
     </CCard>    
        
