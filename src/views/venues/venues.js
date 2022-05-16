@@ -416,14 +416,14 @@ const Venues = () => {
       {/* VENUE GRID */}
       <Container>
         <h3>Venues</h3>
-        {React.useMemo(() =>
+      
           <GridComponent
             approveVenuesEmitter={performApprovedMethod}
             rejectVenuesEmitter={performRejectMethod}
             viewVenuesEmitter={performViewVenueMethod}
             disableVenuesEmitter={performDisableVenueMethod}
             enableVenuesEmitter={performEnableVenueMethod}
-            columnDefs={columns} gridData={data} />, [columns, data])}
+            columnDefs={columns} gridData={data} />
       </Container>
     </>
   );
