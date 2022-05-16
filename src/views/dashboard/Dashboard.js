@@ -65,6 +65,7 @@ import avatar6 from 'src/assets/images/avatars/6.jpg'
 
 import WidgetsBrand from '../widgets/WidgetsBrand'
 import WidgetsDropdown from '../widgets/WidgetsDropdown'
+import {getIconsByStatsName} from '../../utilities/helper'
 
 const Dashboard = () => {
   const [data, setData] = React.useState([]);
@@ -244,7 +245,7 @@ const Dashboard = () => {
                <CWidgetStatsC
                key={statsRow.title}
                className="mx-3"
-                icon={<CIcon icon={cilHome} height={36} />}
+                icon={getIconsByStatsName(statsRow.title)}
                 value={statsRow.value}
                 title={statsRow.title}
                 progress={{ color: statsRow.color, value: 100 }}
@@ -261,7 +262,7 @@ const Dashboard = () => {
                <CWidgetStatsC
                key={statsRow.title}
                className="mx-3"
-                icon={<CIcon icon={cilHome} height={36} />}
+               icon={getIconsByStatsName(statsRow.title)}
                 value={statsRow.value}
                 title={statsRow.title}
                 color={statsRow.color}
